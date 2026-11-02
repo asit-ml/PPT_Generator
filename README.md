@@ -2,6 +2,8 @@
 
 Transform your text into beautiful PowerPoint presentations with AI-powered intelligence.
 
+Live demo: https://bonus-1-ten.vercel.app
+
 ## Features
 
 - **Smart Content Analysis**: Automatically breaks down text into well-structured slides
@@ -33,8 +35,8 @@ When you upload a PowerPoint template, the app:
 
 1. Clone this repository:
    ```bash
-   git clone <repository-url>
-   cd presentation-ai
+   git clone https://github.com/23f1000318/PPT_Generator.git
+   cd PPT_Generator
    ```
 
 2. Install dependencies:
