@@ -64,7 +64,8 @@ When you upload a PowerPoint template, the app:
 
 You'll need an API key from one of these providers:
 
-- **OpenAI**: Get your key at [platform.openai.com](https://platform.openai.com/api-keys)
+- **AI Pipe (recommended for the deployed browser app)**: Get a token at [aipipe.org/login](https://aipipe.org/login). Enter the raw token without the `Bearer` prefix.
+- **OpenAI**: Get your key at [platform.openai.com](https://platform.openai.com/api-keys). Direct browser requests may be blocked by provider CORS policies.
 - **Anthropic**: Get your key at [console.anthropic.com](https://console.anthropic.com/)
 - **Google**: Get your key at [ai.google.dev](https://ai.google.dev/)
 

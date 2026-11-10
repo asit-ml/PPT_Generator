@@ -3,7 +3,7 @@ import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 export interface AppState {
   inputText: string;
   guidance: string;
-  llmProvider: 'openai' | 'anthropic' | 'gemini';
+  llmProvider: 'aipipe' | 'openai' | 'anthropic' | 'gemini';
   apiKey: string;
   templateFile: File | null;
   templateData: any;
@@ -17,7 +17,7 @@ export interface AppState {
 export type AppAction =
   | { type: 'SET_INPUT_TEXT'; payload: string }
   | { type: 'SET_GUIDANCE'; payload: string }
-  | { type: 'SET_LLM_PROVIDER'; payload: 'openai' | 'anthropic' | 'gemini' }
+  | { type: 'SET_LLM_PROVIDER'; payload: 'aipipe' | 'openai' | 'anthropic' | 'gemini' }
   | { type: 'SET_API_KEY'; payload: string }
   | { type: 'SET_TEMPLATE_FILE'; payload: File | null }
   | { type: 'SET_TEMPLATE_DATA'; payload: any }
@@ -31,7 +31,7 @@ export type AppAction =
 const initialState: AppState = {
   inputText: '',
   guidance: '',
-  llmProvider: 'openai',
+  llmProvider: 'aipipe',
   apiKey: '',
   templateFile: null,
   templateData: null,

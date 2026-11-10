@@ -4,7 +4,7 @@ import { TemplateData } from './templateParser';
 interface GenerationRequest {
   inputText: string;
   guidance: string;
-  llmProvider: 'openai' | 'anthropic' | 'gemini';
+  llmProvider: 'aipipe' | 'openai' | 'anthropic' | 'gemini';
   apiKey: string;
   templateData: TemplateData | null;
   onProgress: (step: string) => void;

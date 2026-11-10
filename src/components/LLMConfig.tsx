@@ -6,7 +6,8 @@ export function LLMConfig() {
   const { state, dispatch } = useApp();
 
   const providers = [
-    { id: 'openai', name: 'OpenAI GPT', description: 'GPT-3.5/4 for reliable text processing' },
+    { id: 'aipipe', name: 'AI Pipe (recommended)', description: 'Browser-safe OpenAI-compatible access' },
+    { id: 'openai', name: 'OpenAI GPT', description: 'Direct browser request; may require CORS access' },
     { id: 'anthropic', name: 'Anthropic Claude', description: 'Claude for nuanced content analysis' },
     { id: 'gemini', name: 'Google Gemini', description: 'Gemini for fast processing' }
   ];
@@ -33,7 +34,7 @@ export function LLMConfig() {
                   checked={state.llmProvider === provider.id}
                   onChange={(e) => dispatch({ 
                     type: 'SET_LLM_PROVIDER', 
-                    payload: e.target.value as 'openai' | 'anthropic' | 'gemini'
+                    payload: e.target.value as 'aipipe' | 'openai' | 'anthropic' | 'gemini'
                   })}
                   className="sr-only"
                 />
@@ -68,7 +69,7 @@ export function LLMConfig() {
           <div className="flex items-start space-x-2 mt-2">
             <Shield className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
             <p className="text-sm text-gray-600">
-              Your API key is never stored or logged. It's only used for the current session.
+              Your API key is never stored or logged. For AI Pipe, enter the raw token without the <code>Bearer</code> prefix.
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 interface LLMRequest {
   inputText: string;
   guidance: string;
-  provider: 'openai' | 'anthropic' | 'gemini';
+  provider: 'aipipe' | 'openai' | 'anthropic' | 'gemini';
   apiKey: string;
 }
 
@@ -98,12 +98,22 @@ function cleanJsonResponse(response: string): string {
 
 async function callLLM(provider: string, apiKey: string, prompt: string): Promise<string> {
   let endpoint = '';
-  let headers: Record<string, string> = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json'
   };
   let body: any = {};
 
   switch (provider) {
+    case 'aipipe':
+      endpoint = 'https://aipipe.org/openai/v1/chat/completions';
+      headers['Authorization'] = `Bearer ${apiKey.trim().replace(/^Bearer\s+/i, '')}`;
+      body = {
+        model: 'gpt-4o-mini',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7
+      };
+      break;
+
     case 'openai':
       endpoint = 'https://api.openai.com/v1/chat/completions';
       headers['Authorization'] = `Bearer ${apiKey}`;
@@ -138,11 +148,19 @@ async function callLLM(provider: string, apiKey: string, prompt: string): Promis
       throw new Error('Unsupported LLM provider');
   }
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(body)
-  });
+  let response: Response;
+  try {
+    response = await fetch(endpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body)
+    });
+  } catch (error) {
+    if (error instanceof TypeError && error.message.toLowerCase().includes('fetch')) {
+      throw new Error('The provider blocked this browser request. Select AI Pipe and use an AI Pipe token, or configure a server-side proxy.');
+    }
+    throw error;
+  }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
@@ -153,6 +171,7 @@ async function callLLM(provider: string, apiKey: string, prompt: string): Promis
 
   // Extract content based on provider
   switch (provider) {
+    case 'aipipe':
     case 'openai':
       return data.choices[0]?.message?.content || '';
     case 'anthropic':
